@@ -7,8 +7,9 @@ export class Book {
     public author: string;
     public publishedDate: string;
     public pageCount: string;
+    public isFavorite?: boolean = false;
 
-    constructor(args: {id: string, webLink: string, title: string, subtitle: string, thumbnail: string, author: string, publishedDate: string, pageCount: string}) {
+    constructor(args: {id: string, webLink: string, title: string, subtitle: string, thumbnail: string, author: string, publishedDate: string, pageCount: string, isFavorite?: boolean}) {
         this.id = args.id
         this.author = args.author
         this.publishedDate = args.publishedDate
@@ -17,5 +18,6 @@ export class Book {
         this.title = args.title
         this.thumbnail = args.thumbnail
         this.webLink = args.webLink
+        this.isFavorite = args.isFavorite
     }
 }

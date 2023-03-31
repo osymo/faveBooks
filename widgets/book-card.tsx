@@ -1,11 +1,21 @@
+import React from 'react';
 import { Text, View, StyleSheet, Image, Pressable } from 'react-native'
 
 import { Book } from '../models';
 
 const heartIconOrange = require("../assets/icons/heart-orange.png")
+const fullHeartIconOrange = require("../assets/icons/heart-orange-full.png")
 
+interface BookProps {
+    book: Book,
+    showLikeBtn?: boolean,
+    addToFavorite?: Function
+}
 
-export function BookCard(book: Book) {
+export function BookCard({ book, addToFavorite, showLikeBtn = true }: BookProps) {
+
+    const handleLike = () => addToFavorite && addToFavorite(book)
+
     return <View style={styles.container}>
         <View style={styles.imageWrapper}>
             <Image source={{ uri: book.thumbnail }} style={styles.image} />
@@ -16,12 +26,14 @@ export function BookCard(book: Book) {
                 <Text numberOfLines={2} style={styles.subtitle}>{book.subtitle}</Text>
             </View>
             <View style={styles.likeBtnWrapper}>
-                <Pressable style={styles.likeBtn}>
-                    <Image source={heartIconOrange} style={{ width: 24, height: 24 }} />
-                </Pressable>
+                {
+                    showLikeBtn ?
+                        <Pressable style={styles.likeBtn} onPress={handleLike}>
+                            <Image source={book.isFavorite ? fullHeartIconOrange : heartIconOrange} style={{ width: 28, height: 28 }} />
+                        </Pressable> : null
+                }
             </View>
         </View>
-
     </View>
 }
 
@@ -69,6 +81,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     likeBtn: {
-        width: 24
+        width: 28
     }
 })
