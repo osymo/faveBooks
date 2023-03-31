@@ -15,7 +15,9 @@ export function HomeScreen() {
     const getAllBooks = async () => await BoooksService.getBooks()
 
     const addBookToFavorite = async (book: Book) => {
+
         const faveBooks = await StorageService.getObject('faveBooks') || []
+        
         const existingBook = faveBooks.find((fb: Book) => fb.id == book.id)
 
         if (!existingBook) {
@@ -47,8 +49,6 @@ export function HomeScreen() {
             StorageService.storeObject('faveBooks', updatedFaveBooks)
             Alert.alert('Infos', 'The book is removed from your favorite')
         }
-        
-        console.log(book)
     }
 
     const booksList = books.length ? books.map(book => <BookCard book={book} addToFavorite={addBookToFavorite} key={book.id} />) : null
